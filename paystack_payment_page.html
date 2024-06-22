@@ -3,37 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pay with Paystack</title>
+    <title>Paystack Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .logo {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+        .heading {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+        .description {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #666666;
+        }
+        .pay-button {
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .pay-button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-    <h1>Complete Your Payment</h1>
-    <button id="pay-with-paystack">Pay</button>
+    <div class="container">
+        <img src="https://ericowusu685.github.io/sickboy/logo.png" alt="DR.HIGH Logo" class="logo">
+        <div class="heading">Complete Your Payment</div>
+        <div class="description">Click the button below to proceed with the payment.</div>
+        <button class="pay-button" onclick="payWithPaystack()">Pay Now</button>
+    </div>
 
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <script>
-        document.getElementById('pay-with-paystack').addEventListener('click', function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get('email');
-            const amount = urlParams.get('amount');
-            const currency = urlParams.get('currency');
-            const reference = urlParams.get('reference');
-            const publicKey = urlParams.get('public_key');
-
-            const handler = PaystackPop.setup({
-                key: publicKey,
-                email: email,
-                amount: amount,
-                currency: currency,
-                ref: reference,
-                callback: function (response) {
-                    alert('Payment successful. Transaction ref is ' + response.reference);
+    <script type="text/javascript">
+        function payWithPaystack() {
+            var handler = PaystackPop.setup({
+                key: 'pk_test_...', // Replace with your Paystack public key
+                email: new URLSearchParams(window.location.search).get('email'),
+                amount: parseInt(new URLSearchParams(window.location.search).get('amount')),
+                currency: 'GHS',
+                ref: new URLSearchParams(window.location.search).get('reference'),
+                callback: function(response) {
+                    alert('Payment successful. Transaction reference: ' + response.reference);
+                    // You can send this reference to your server to verify the transaction and update the order status
                 },
-                onClose: function () {
-                    alert('Payment window closed.');
+                onClose: function() {
+                    alert('Payment cancelled');
                 }
             });
             handler.openIframe();
-        });
+        }
     </script>
 </body>
 </html>
