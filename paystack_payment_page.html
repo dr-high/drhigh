@@ -66,7 +66,7 @@
     <script type="text/javascript">
         function payWithPaystack() {
             var handler = PaystackPop.setup({
-                key: 'pk_test_...', // Replace with your Paystack public key
+                key: 'pk_live_17df9d6fd31795a409f39bc252f2a274525c8e20', // Replace with your Paystack public key
                 email: new URLSearchParams(window.location.search).get('email'),
                 amount: parseInt(new URLSearchParams(window.location.search).get('amount')),
                 currency: 'GHS',
