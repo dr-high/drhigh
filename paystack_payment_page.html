@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay with Paystack</title>
+</head>
+<body>
+    <h1>Complete Your Payment</h1>
+    <button id="pay-with-paystack">Pay</button>
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        document.getElementById('pay-with-paystack').addEventListener('click', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            const amount = urlParams.get('amount');
+            const currency = urlParams.get('currency');
+            const reference = urlParams.get('reference');
+            const publicKey = urlParams.get('public_key');
+
+            const handler = PaystackPop.setup({
+                key: publicKey,
+                email: email,
+                amount: amount,
+                currency: currency,
+                ref: reference,
+                callback: function (response) {
+                    alert('Payment successful. Transaction ref is ' + response.reference);
+                },
+                onClose: function () {
+                    alert('Payment window closed.');
+                }
+            });
+            handler.openIframe();
+        });
+    </script>
+</body>
+</html>
