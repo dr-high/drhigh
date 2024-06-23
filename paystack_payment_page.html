@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<head<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,7 +75,7 @@
                 ref: new URLSearchParams(window.location.search).get('reference'),
                 callback: function(response) {
                     alert('Payment successful. Transaction reference: ' + response.reference);
-                    // You can send this reference to your server to verify the transaction and update the order status
+                    window.location.href = 'new_form.html'; // Redirect to the new form page
                 },
                 onClose: function() {
                     alert('Payment cancelled');
