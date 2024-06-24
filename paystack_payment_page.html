@@ -52,6 +52,11 @@
         .pay-button:hover {
             background-color: #218838;
         }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333333;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +65,9 @@
         <div class="heading">Complete Your Payment</div>
         <div class="description">Click the button below to proceed with the payment.</div>
         <button class="pay-button" onclick="payWithPaystack()">Pay Now</button>
+        <div id="footer" class="footer" style="display: none;">
+            Please do not close page after payment, complete your contact details.
+        </div>
     </div>
 
     <script src="https://js.paystack.co/v1/inline.js"></script>
@@ -73,7 +81,10 @@
                 ref: new URLSearchParams(window.location.search).get('reference'),
                 callback: function(response) {
                     alert('Payment successful. Transaction reference: ' + response.reference);
-                    window.location.href = 'https://form.jotform.com/241748655476066'; // Redirect to the Jotform link
+                    document.getElementById('footer').style.display = 'block';
+                    setTimeout(function() {
+                        window.location.href = 'https://form.jotform.com/241748655476066'; // Redirect to the Jotform link
+                    }, 5000); // Adjust delay as needed
                 },
                 onClose: function() {
                     alert('Payment cancelled');
