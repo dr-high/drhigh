@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +73,7 @@
                 ref: new URLSearchParams(window.location.search).get('reference'),
                 callback: function(response) {
                     alert('Payment successful. Transaction reference: ' + response.reference);
-                    window.location.href = 'new_form.html'; // Redirect to the new form page
+                    window.location.href = 'https://form.jotform.com/jsform/241748655476066'; // Redirect to the external link
                 },
                 onClose: function() {
                     alert('Payment cancelled');
