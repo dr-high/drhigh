@@ -57,6 +57,10 @@
             font-size: 14px;
             color: #333333;
         }
+        .countdown {
+            font-size: 16px;
+            color: #ff0000;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +70,7 @@
         <div class="description">Click the button below to proceed with the payment.</div>
         <button class="pay-button" onclick="payWithPaystack()">Pay Now</button>
         <div id="footer" class="footer" style="display: none;">
-            Please do not close page after payment, complete your contact details.
+            Payment successful! Redirecting in <span id="countdown">5</span> seconds. Please do not close the page after payment, complete your contact details.
         </div>
     </div>
 
@@ -80,11 +84,17 @@
                 currency: 'GHS',
                 ref: new URLSearchParams(window.location.search).get('reference'),
                 callback: function(response) {
-                    // alert('Payment successful. Transaction reference: ' + response.reference);
                     document.getElementById('footer').style.display = 'block';
-                    setTimeout(function() {
-                        window.location.href = 'https://form.jotform.com/241748655476066'; // Redirect to the Jotform link
-                    }, 5000); // Adjust delay as needed
+                    var countdownElement = document.getElementById('countdown');
+                    var countdown = 5;
+                    var interval = setInterval(function() {
+                        countdown--;
+                        countdownElement.textContent = countdown;
+                        if (countdown === 0) {
+                            clearInterval(interval);
+                            window.location.href = 'https://form.jotform.com/241748655476066'; // Redirect to the Jotform link
+                        }
+                    }, 1000);
                 },
                 onClose: function() {
                     alert('Payment cancelled');
